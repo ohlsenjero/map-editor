@@ -1,0 +1,41 @@
+
+<header>
+  <p>Sprite Palette</p>
+  <input id="save" type="text" name="input" value="name">
+  <button id="btn-save">SAVE</button>
+
+  <input id="load" type="text" name="input" value="name">
+  <button id="btn-load">LOAD</button>
+ </header>
+
+<div class="wrapper">
+    <div class="palette">
+      <% if(data != undefined){%>
+        <%for (property in data) {%>
+        <div class="swatch">
+        <img src="../<%=`${data[property]}`%>" >
+        </div>
+      <% } %>
+    <% } %>
+
+  </div>
+
+  <% if(map != undefined){%>
+       
+        <% for(var j=0; j <  map.length; j++){ %>
+          <p><%=map[j]%></p>
+
+          
+        <% } %>
+        
+      
+    <% } %>
+
+  <div id="display">
+      
+      <canvas id="canvas" width="500px" height="500px"></canvas>
+    </div>
+
+</div>
+    
+
