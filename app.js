@@ -5,7 +5,9 @@ const expressLayouts = require('express-ejs-layouts');
 
 const dirTree = require("directory-tree");
 
-var tree;
+var swachtTree;
+
+var loadTree;
 
 const fs = require('file-system');
 
@@ -41,14 +43,14 @@ function getSwatches(rootFolder){
 
   var rf = "./images/a/";
   if(rootFolder=='A'){
-    console.log('choclo');
+    //console.log('choclo');
     rf = "./images/a/";
-    tree = dirTree(rf);
+    swachtTree = dirTree(rf);
     
   }else if(rootFolder=='B'){
-    console.log('porotos');
+    //console.log('porotos');
     rf = "./images/b/";
-    tree = dirTree(rf);
+    swachtTree = dirTree(rf);
   }
   
   
@@ -56,41 +58,34 @@ function getSwatches(rootFolder){
   var dirFind = [];
   var obj = {};
 
-for(var i= 0; i < tree.children.length; i++){
-  console.log(tree.children[i].path)
+for(var i= 0; i < swachtTree.children.length; i++){
+  //console.log(swachtTree.children[i].path)
   /////////////////////
   /////
   //        HERE IS WHERE YOU CHANGE (VIA AJAX i guess) AND SWITCH BETWEEN  "./images:A/" <<>> "./images:B/"
   /////
   //////////
-  var newTree = dirTree(rf+tree.children[i].name);
+  var newswachtTree = dirTree(rf+swachtTree.children[i].name);
 
 
 
-  if(newTree.children != undefined){
-    //console.log(newTree.children.length);
-    for(var j= 0; j < newTree.children.length; j++){
+  if(newswachtTree.children != undefined){
+    //console.log(newswachtTree.children.length);
+    for(var j= 0; j < newswachtTree.children.length; j++){
 
-      dirFind.push(newTree.children[j].path);
+      dirFind.push(newswachtTree.children[j].path);
       
     }
 
   }else{ 
-      dirFind.push(tree.children[i].path);
+      dirFind.push(swachtTree.children[i].path);
       
   }
 }
 
 for (var i = 0; i< dirFind.length; i++) {
   obj["variable_" + i] = dirFind[i];
-  ///
-  //  SO HERE is where I can distinguish from one palette to the next (mountain, desert, water, etc..)
-  //       and so maybe store in different objects (name based on type)
-  //        and then send as diff keys in the {post object}
-  //          to pick up in the view and put each one in a diff palette.class (to switch back and forth)
-  //
-  // class="palette-floors",class="palette-walls","palette-overs","palette-anim&covers"<-(liquids-tallGrass)
-  //      
+    
 }
 return obj;
 }
@@ -98,11 +93,22 @@ return obj;
 
 app.get('/',  function(req, res){
 
-  console.log('main-pageLoad');
+ // console.log('main-pageLoad');
   var obj = getSwatches('A');
   var obj2 = getSwatches('B');
 
-  res.render('landing', {data: obj, data2: obj2})
+  loadTree = dirTree("./saved/");
+
+  var loadedTree = [];
+
+  for (var i = 0; i < loadTree.children.length; i++) {
+    console.log(loadTree.children[i].name.split(/\.(?=[^\.]+$)/)[0]);
+
+
+    loadedTree.push(loadTree.children[i].name.split(/\.(?=[^\.]+$)/)[0]);
+  }
+
+  res.render('landing', {data: obj, data2: obj2, loadedTree: loadedTree })
         
 });
 

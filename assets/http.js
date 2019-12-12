@@ -37,9 +37,17 @@ var mapWidth;
 var	mapHeight;
 //// USER DEFINED  
 
+   
+var mapObjInit = {
+	mapForLoading:map, 
+	tilesXY:{x:30, y:20}, 
+	tileSize:25
+}
 /// 		intialize map as a set of null values -> based both on canvas & tileSize;
-initMap(30, 20, 25);
-//           so that later on when draw() into it, it can write on an existing block, already in place    
+initMap(mapObjInit.tilesXY.x, mapObjInit.tilesXY.y, mapObjInit.tileSize);
+	/// this should be drawFromLoad, bt its got a problem with the map Array, need to separate, from init or not..
+
+//           so that later on when draw() into it, it can write on an existing block, already in place 
 
 /// I N I T
 function initMap(w,h,ts){
@@ -316,7 +324,7 @@ var buttonSave = document.getElementById("btn-save");
       	tilesXY:JSON.stringify({x:mapWidth, y:mapHeight}),
       	map:JSON.stringify(savedMap), mapForLoading: JSON.stringify(map)},
       success: function(data){
-        console.log("SAVED");
+        alert("SAVED");
       }
     });
 });
@@ -329,9 +337,10 @@ var loadedMap = [];
 
 var buttonLoad = document.getElementById("btn-load");
     buttonLoad.addEventListener('click', function() {
+
+    var selectedOption = document.getElementById("load-option");	
 	
-	var fileName = document.getElementById('load').value;  
-									     
+	var fileName = selectedOption.options[selectedOption.selectedIndex].value;  
 
     $.ajax({ 
       type: 'POST',

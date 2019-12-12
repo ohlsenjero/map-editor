@@ -3,8 +3,16 @@
   <input id="save" type="text" name="input" value="name">
   <button id="btn-save">SAVE</button>
 
-  <input id="load" type="text" name="input" value="name">
-  <button id="btn-load">LOAD</button>
+
+
+  <select id="load-option">
+    <%for (var i=0; i<loadedTree.length; i++) {%>
+      <option><%= loadedTree[i] %></option>
+    <%}%>
+
+  </select>
+
+  <button id="btn-load">LOAD</button> 
 
  
   <input id="tile-settings" type="text" name="input" value="25">
