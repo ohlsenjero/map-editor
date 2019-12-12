@@ -59,12 +59,9 @@ function getSwatches(rootFolder){
   var obj = {};
 
 for(var i= 0; i < swachtTree.children.length; i++){
-  //console.log(swachtTree.children[i].path)
-  /////////////////////
-  /////
-  //        HERE IS WHERE YOU CHANGE (VIA AJAX i guess) AND SWITCH BETWEEN  "./images:A/" <<>> "./images:B/"
-  /////
-  //////////
+
+
+
   var newswachtTree = dirTree(rf+swachtTree.children[i].name);
 
 
